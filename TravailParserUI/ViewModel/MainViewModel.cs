@@ -31,9 +31,8 @@ namespace TravailParserUI.ViewModel
 
         /// <summary>
         /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Changes to that property's value raise the PropertyChanged event.
         /// </summary>
-        
 
         public DataTable TrvData
         {
@@ -54,8 +53,6 @@ namespace TravailParserUI.ViewModel
             _dialogService = new DialogService();
 
             LoadCommands();
-
-            
         }
 
         private void LoadCommands()
@@ -77,7 +74,7 @@ namespace TravailParserUI.ViewModel
                 Title = "Save travail file as an excel sheet",
                 CheckFileExists = false
             };
-            
+
             if (_dialogService.ShowSaveFileDialog(this, setting) == true)
             {
                 _dataService.SaveData(TrvData, setting.FileName);

@@ -10,8 +10,8 @@ namespace TravailParserUI.Model
     // ReSharper disable once ClassNeverInstantiated.Global
     public class DataService : IDataService
     {
-        private static readonly Regex ToReplace = new Regex(@"(?: (?:[\w]{1,2}|)[\d]{3} {1,2}[\d]{1,2}(?: {1,3}\d{1,2} |))|(?:\d{1,2}[Y]\d{2}\D\d{2})");
-        private const string NewLine = "0   0   500 720 501 32  ";
+        private static readonly Regex _toReplace = new Regex(@"(?: (?:[\w]{1,2}|)[\d]{3} {1,2}[\d]{1,2}(?: {1,3}\d{1,2} |))|(?:\d{1,2}[Y]\d{2}\D\d{2})");
+        private readonly string[] _newLines = new string[]{"0   0   500 720 501 32  ", "0   0   500 712 501 32  " };
 
         public void GetData(Action<DataTable, Exception> callback, string filePath)
         {
@@ -26,12 +26,15 @@ namespace TravailParserUI.Model
                     line = streamReader.ReadToEnd();
                 }
 
-                line = line.Replace(NewLine, Environment.NewLine);
-                line = ToReplace.Replace(line, "");
+                foreach (var newLine in _newLines)
+                {
+                    line = line.Replace(newLine, Environment.NewLine);
+                }
+
+                line = _toReplace.Replace(line, "");
                 line = line.Remove(0, line.IndexOf(">", StringComparison.Ordinal));
 
-            
-                var split = line.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
+                var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 var dataFromTrv = string.Join(" ", split);
 
@@ -53,7 +56,6 @@ namespace TravailParserUI.Model
                 {
                     var fields = s.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     var newFields = fields.Take(9).ToArray();
-
 
                     var newRow = table.Rows.Add();
                     newRow.ItemArray = newFields;
