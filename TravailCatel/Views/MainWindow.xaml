@@ -1,0 +1,24 @@
+﻿<catel:Window x:Class="TravailCatel.Views.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:catel="http://schemas.catelproject.com"
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+              ResizeMode="CanResize">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+     <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <DataGrid IsReadOnly="True" Grid.Row="0" ItemsSource="{Binding TrvTable}"></DataGrid>
+        <Button Grid.Row="1" Content="Open trv"  Command="{Binding OpenTrvCommand}"></Button>
+    </Grid>
+    
+</catel:Window>
