@@ -32,7 +32,13 @@ namespace TravailParserUI.Model
                 }
 
                 line = _toReplace.Replace(line, "");
-                line = line.Remove(0, line.IndexOf(">", StringComparison.Ordinal));
+
+                var index = line.IndexOf(">", StringComparison.Ordinal);
+
+                if (index > 0)
+                {
+                    line = line.Remove(0, index);
+                }
 
                 var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
